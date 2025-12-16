@@ -66,7 +66,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-background">
       <Navigation />
 
-      <main className="container px-4 py-8 space-y-12">
+      <main className="container mx-auto px-4 py-8 space-y-12">
         {/* Hero Section */}
         <section className="text-center space-y-6 py-12">
           <Badge variant="secondary" className="text-sm">

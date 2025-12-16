@@ -398,7 +398,7 @@ export default function DevConsolePage() {
     <div className="min-h-screen bg-background">
       <Navigation />
 
-      <main className="container px-4 py-6">
+      <main className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold">Dev Console</h1>
