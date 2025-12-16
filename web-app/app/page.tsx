@@ -74,7 +74,7 @@ export default function HomePage() {
             AI-Powered Retail Demo
           </Badge>
 
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-balance">OmniSales AI</h1>
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-balance">Birla OneAI</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
             Experience the future of retail with our conversational AI agent orchestrating Worker Agents across multiple
             channels for seamless shopping experiences.
@@ -209,7 +209,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="border-t border-border mt-12">
         <div className="container px-4 py-6 text-center text-sm text-muted-foreground">
-          <p>OmniSales AI Demo — Built with Next.js, React, and Tailwind CSS</p>
+          <p>Birla OneAI Demo — Built with Next.js, React, and Tailwind CSS</p>
           <p className="mt-1">Ready for Vercel deployment</p>
         </div>
       </footer>

@@ -384,7 +384,7 @@ export default function DevConsolePage() {
       message: {
         id: "demo-11",
         role: "agent",
-        content: `📧 Confirmation sent to ${customerEmail}\n📱 SMS notification enabled\n\nThank you for shopping with OmniSales AI! Is there anything else I can help you with?`,
+        content: `📧 Confirmation sent to ${customerEmail}\n📱 SMS notification enabled\n\nThank you for shopping with Birla OneAI! Is there anything else I can help you with?`,
         timestamp: new Date().toISOString(),
         channel: "kiosk",
         agentInvoked: "postPurchase",
