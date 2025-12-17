@@ -384,7 +384,7 @@ export default function DevConsolePage() {
       message: {
         id: "demo-11",
         role: "agent",
-        content: `📧 Confirmation sent to ${customerEmail}\n📱 SMS notification enabled\n\nThank you for shopping with OmniSales AI! Is there anything else I can help you with?`,
+        content: `📧 Confirmation sent to ${customerEmail}\n📱 SMS notification enabled\n\nThank you for shopping with Birla OneAI! Is there anything else I can help you with?`,
         timestamp: new Date().toISOString(),
         channel: "kiosk",
         agentInvoked: "postPurchase",
@@ -398,7 +398,7 @@ export default function DevConsolePage() {
     <div className="min-h-screen bg-background">
       <Navigation />
 
-      <main className="container px-4 py-6">
+      <main className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold">Dev Console</h1>

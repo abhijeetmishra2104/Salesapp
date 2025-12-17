@@ -1,4 +1,4 @@
-# OmniSales AI — Conversational Retail Agent
+# Birla OneAI — Conversational Retail Agent
 
 A production-ready demo website showcasing an AI Sales Agent orchestrating Worker Agents across multiple channels for seamless omnichannel retail experiences.
 
@@ -23,13 +23,17 @@ A production-ready demo website showcasing an AI Sales Agent orchestrating Worke
 ## How to Run Locally
 
 \`\`\`bash
+
 # Install dependencies
+
 npm install
 
 # Start development server
+
 npm run dev
 
 # Open http://localhost:3000
+
 \`\`\`
 
 ## How to Deploy to Vercel
@@ -47,15 +51,15 @@ vercel
 
 ## Mock API Endpoints
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/mock/customers` | GET | Get customer data |
-| `/api/mock/products` | GET | Get product catalog |
-| `/api/mock/inventory` | GET | Check stock levels |
-| `/api/mock/recommend` | POST | Get AI recommendations |
-| `/api/mock/payment` | POST | Process payment |
-| `/api/mock/fulfillment` | POST | Schedule delivery/pickup |
-| `/api/mock/loyalty` | POST | Calculate discounts |
+| Endpoint                | Method | Description              |
+| ----------------------- | ------ | ------------------------ |
+| `/api/mock/customers`   | GET    | Get customer data        |
+| `/api/mock/products`    | GET    | Get product catalog      |
+| `/api/mock/inventory`   | GET    | Check stock levels       |
+| `/api/mock/recommend`   | POST   | Get AI recommendations   |
+| `/api/mock/payment`     | POST   | Process payment          |
+| `/api/mock/fulfillment` | POST   | Schedule delivery/pickup |
+| `/api/mock/loyalty`     | POST   | Calculate discounts      |
 
 ## Scripted Demo Walkthrough
 
@@ -82,26 +86,26 @@ vercel
 
 \`\`\`
 ├── app/
-│   ├── page.tsx              # Landing page
-│   ├── chat/page.tsx         # Chat interface
-│   ├── products/page.tsx     # Product catalog
-│   ├── checkout/page.tsx     # Checkout flow
-│   ├── dev-console/page.tsx  # Developer tools
-│   └── api/mock/             # Mock API routes
+│ ├── page.tsx # Landing page
+│ ├── chat/page.tsx # Chat interface
+│ ├── products/page.tsx # Product catalog
+│ ├── checkout/page.tsx # Checkout flow
+│ ├── dev-console/page.tsx # Developer tools
+│ └── api/mock/ # Mock API routes
 ├── components/
-│   ├── chat-shell.tsx        # Main chat component
-│   ├── channel-switcher.tsx  # Channel selection
-│   ├── agent-tile.tsx        # Agent status display
-│   ├── product-card.tsx      # Product display
-│   ├── checkout-form.tsx     # Payment form
-│   └── navigation.tsx        # Site navigation
+│ ├── chat-shell.tsx # Main chat component
+│ ├── channel-switcher.tsx # Channel selection
+│ ├── agent-tile.tsx # Agent status display
+│ ├── product-card.tsx # Product display
+│ ├── checkout-form.tsx # Payment form
+│ └── navigation.tsx # Site navigation
 ├── lib/
-│   ├── store.ts              # State management
-│   └── api.ts                # API client helpers
+│ ├── store.ts # State management
+│ └── api.ts # API client helpers
 └── mock/
-    ├── customers.json        # Customer data
-    ├── products.json         # Product catalog
-    └── inventory.json        # Stock levels
+├── customers.json # Customer data
+├── products.json # Product catalog
+└── inventory.json # Stock levels
 \`\`\`
 
 ## License

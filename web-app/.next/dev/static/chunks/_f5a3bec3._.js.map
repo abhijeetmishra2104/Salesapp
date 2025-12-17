@@ -1,0 +1,210 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {
+      "offset": {
+        "line": 4,
+        "column": 0
+      },
+      "map": {
+        "version": 3,
+        "sources": [
+          "file:///Users/abhijeetmishra/Developer/Projects/Salesapp/web-app/lib/utils.ts"
+        ],
+        "sourcesContent": [
+          "import { clsx, type ClassValue } from 'clsx'\nimport { twMerge } from 'tailwind-merge'\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n"
+        ],
+        "names": [],
+        "mappings": ";;;;AAAA;AACA;;;AAEO,SAAS,GAAG,GAAG,MAAoB;IACxC,OAAO,IAAA,yKAAO,EAAC,IAAA,gJAAI,EAAC;AACtB"
+      }
+    },
+    {
+      "offset": {
+        "line": 22,
+        "column": 0
+      },
+      "map": {
+        "version": 3,
+        "sources": [
+          "file:///Users/abhijeetmishra/Developer/Projects/Salesapp/web-app/components/ui/button.tsx"
+        ],
+        "sourcesContent": [
+          "import * as React from 'react'\nimport { Slot } from '@radix-ui/react-slot'\nimport { cva, type VariantProps } from 'class-variance-authority'\n\nimport { cn } from '@/lib/utils'\n\nconst buttonVariants = cva(\n  \"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive\",\n  {\n    variants: {\n      variant: {\n        default: 'bg-primary text-primary-foreground hover:bg-primary/90',\n        destructive:\n          'bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',\n        outline:\n          'border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',\n        secondary:\n          'bg-secondary text-secondary-foreground hover:bg-secondary/80',\n        ghost:\n          'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',\n        link: 'text-primary underline-offset-4 hover:underline',\n      },\n      size: {\n        default: 'h-9 px-4 py-2 has-[>svg]:px-3',\n        sm: 'h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5',\n        lg: 'h-10 rounded-md px-6 has-[>svg]:px-4',\n        icon: 'size-9',\n        'icon-sm': 'size-8',\n        'icon-lg': 'size-10',\n      },\n    },\n    defaultVariants: {\n      variant: 'default',\n      size: 'default',\n    },\n  },\n)\n\nfunction Button({\n  className,\n  variant,\n  size,\n  asChild = false,\n  ...props\n}: React.ComponentProps<'button'> &\n  VariantProps<typeof buttonVariants> & {\n    asChild?: boolean\n  }) {\n  const Comp = asChild ? Slot : 'button'\n\n  return (\n    <Comp\n      data-slot=\"button\"\n      className={cn(buttonVariants({ variant, size, className }))}\n      {...props}\n    />\n  )\n}\n\nexport { Button, buttonVariants }\n"
+        ],
+        "names": [],
+        "mappings": ";;;;;;;AACA;AACA;AAEA;;;;;AAEA,MAAM,iBAAiB,IAAA,0KAAG,EACxB,+bACA;IACE,UAAU;QACR,SAAS;YACP,SAAS;YACT,aACE;YACF,SACE;YACF,WACE;YACF,OACE;YACF,MAAM;QACR;QACA,MAAM;YACJ,SAAS;YACT,IAAI;YACJ,IAAI;YACJ,MAAM;YACN,WAAW;YACX,WAAW;QACb;IACF;IACA,iBAAiB;QACf,SAAS;QACT,MAAM;IACR;AACF;AAGF,SAAS,OAAO,EACd,SAAS,EACT,OAAO,EACP,IAAI,EACJ,UAAU,KAAK,EACf,GAAG,OAIF;IACD,MAAM,OAAO,UAAU,2KAAI,GAAG;IAE9B,qBACE,6LAAC;QACC,aAAU;QACV,WAAW,IAAA,qHAAE,EAAC,eAAe;YAAE;YAAS;YAAM;QAAU;QACvD,GAAG,KAAK;;;;;;AAGf;KAnBS"
+      }
+    },
+    {
+      "offset": {
+        "line": 87,
+        "column": 0
+      },
+      "map": {
+        "version": 3,
+        "sources": [
+          "file:///Users/abhijeetmishra/Developer/Projects/Salesapp/web-app/components/navigation.tsx"
+        ],
+        "sourcesContent": [
+          "\"use client\"\n\nimport Link from \"next/link\"\nimport { usePathname } from \"next/navigation\"\nimport { cn } from \"@/lib/utils\"\nimport { useStore } from \"@/lib/store\"\nimport { MessageSquare, LayoutDashboard, ShoppingBag, Terminal, Menu, X, ShoppingCart } from \"lucide-react\"\nimport { Button } from \"@/components/ui/button\"\nimport { useState } from \"react\"\n\nconst navItems = [\n  { href: \"/\", label: \"Home\", icon: LayoutDashboard },\n  { href: \"/chat\", label: \"Chat\", icon: MessageSquare },\n  { href: \"/products\", label: \"Products\", icon: ShoppingBag },\n  { href: \"/dev-console\", label: \"Dev Console\", icon: Terminal },\n]\n\nexport function Navigation() {\n  const pathname = usePathname()\n  const { state } = useStore()\n  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)\n  const cartCount = state.cart.reduce((acc, item) => acc + item.quantity, 0)\n\n  return (\n    <header className=\"sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60\">\n      <div className=\"container flex h-14 items-center justify-between px-4\">\n        <div className=\"flex items-center gap-6\">\n          <Link href=\"/\" className=\"flex items-center gap-2\">\n            <div className=\"flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground\">\n              <span className=\"text-sm font-bold\">OS</span>\n            </div>\n            <span className=\"hidden font-semibold sm:inline-block\">Birla OneAI</span>\n          </Link>\n\n          <nav className=\"hidden md:flex items-center gap-1\">\n            {navItems.map((item) => {\n              const Icon = item.icon\n              const isActive = pathname === item.href\n              return (\n                <Link\n                  key={item.href}\n                  href={item.href}\n                  className={cn(\n                    \"flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-colors\",\n                    isActive\n                      ? \"bg-accent text-accent-foreground\"\n                      : \"text-muted-foreground hover:text-foreground hover:bg-accent/50\",\n                  )}\n                >\n                  <Icon className=\"h-4 w-4\" />\n                  {item.label}\n                </Link>\n              )\n            })}\n          </nav>\n        </div>\n\n        <div className=\"flex items-center gap-2\">\n          {state.customer && (\n            <div className=\"hidden sm:flex items-center gap-2 text-sm text-muted-foreground\">\n              <span className=\"capitalize\">{state.customer.loyaltyTier}</span>\n              <span className=\"text-xs\">•</span>\n              <span>{state.customer.name}</span>\n            </div>\n          )}\n\n          <Link href=\"/checkout\" className=\"relative\">\n            <Button variant=\"ghost\" size=\"icon\" className=\"relative\">\n              <ShoppingCart className=\"h-5 w-5\" />\n              {cartCount > 0 && (\n                <span className=\"absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center\">\n                  {cartCount}\n                </span>\n              )}\n            </Button>\n          </Link>\n\n          <Button variant=\"ghost\" size=\"icon\" className=\"md:hidden\" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>\n            {mobileMenuOpen ? <X className=\"h-5 w-5\" /> : <Menu className=\"h-5 w-5\" />}\n          </Button>\n        </div>\n      </div>\n\n      {/* Mobile menu */}\n      {mobileMenuOpen && (\n        <div className=\"md:hidden border-t border-border bg-background\">\n          <nav className=\"container px-4 py-2 flex flex-col gap-1\">\n            {navItems.map((item) => {\n              const Icon = item.icon\n              const isActive = pathname === item.href\n              return (\n                <Link\n                  key={item.href}\n                  href={item.href}\n                  onClick={() => setMobileMenuOpen(false)}\n                  className={cn(\n                    \"flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-colors\",\n                    isActive\n                      ? \"bg-accent text-accent-foreground\"\n                      : \"text-muted-foreground hover:text-foreground hover:bg-accent/50\",\n                  )}\n                >\n                  <Icon className=\"h-4 w-4\" />\n                  {item.label}\n                </Link>\n              )\n            })}\n          </nav>\n        </div>\n      )}\n    </header>\n  )\n}\n"
+        ],
+        "names": [],
+        "mappings": ";;;;;AAEA;AACA;AACA;AACA;AACA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AACA;AACA;;;AARA;;;;;;;;AAUA,MAAM,WAAW;IACf;QAAE,MAAM;QAAK,OAAO;QAAQ,MAAM,kPAAe;IAAC;IAClD;QAAE,MAAM;QAAS,OAAO;QAAQ,MAAM,4OAAa;IAAC;IACpD;QAAE,MAAM;QAAa,OAAO;QAAY,MAAM,sOAAW;IAAC;IAC1D;QAAE,MAAM;QAAgB,OAAO;QAAe,MAAM,yNAAQ;IAAC;CAC9D;AAEM,SAAS;;IACd,MAAM,WAAW,IAAA,oJAAW;IAC5B,MAAM,EAAE,KAAK,EAAE,GAAG,IAAA,4HAAQ;IAC1B,MAAM,CAAC,gBAAgB,kBAAkB,GAAG,IAAA,yKAAQ,EAAC;IACrD,MAAM,YAAY,MAAM,IAAI,CAAC,MAAM,CAAC,CAAC,KAAK,OAAS,MAAM,KAAK,QAAQ,EAAE;IAExE,qBACE,6LAAC;QAAO,WAAU;;0BAChB,6LAAC;gBAAI,WAAU;;kCACb,6LAAC;wBAAI,WAAU;;0CACb,6LAAC,0KAAI;gCAAC,MAAK;gCAAI,WAAU;;kDACvB,6LAAC;wCAAI,WAAU;kDACb,cAAA,6LAAC;4CAAK,WAAU;sDAAoB;;;;;;;;;;;kDAEtC,6LAAC;wCAAK,WAAU;kDAAuC;;;;;;;;;;;;0CAGzD,6LAAC;gCAAI,WAAU;0CACZ,SAAS,GAAG,CAAC,CAAC;oCACb,MAAM,OAAO,KAAK,IAAI;oCACtB,MAAM,WAAW,aAAa,KAAK,IAAI;oCACvC,qBACE,6LAAC,0KAAI;wCAEH,MAAM,KAAK,IAAI;wCACf,WAAW,IAAA,qHAAE,EACX,sFACA,WACI,qCACA;;0DAGN,6LAAC;gDAAK,WAAU;;;;;;4CACf,KAAK,KAAK;;uCAVN,KAAK,IAAI;;;;;gCAapB;;;;;;;;;;;;kCAIJ,6LAAC;wBAAI,WAAU;;4BACZ,MAAM,QAAQ,kBACb,6LAAC;gCAAI,WAAU;;kDACb,6LAAC;wCAAK,WAAU;kDAAc,MAAM,QAAQ,CAAC,WAAW;;;;;;kDACxD,6LAAC;wCAAK,WAAU;kDAAU;;;;;;kDAC1B,6LAAC;kDAAM,MAAM,QAAQ,CAAC,IAAI;;;;;;;;;;;;0CAI9B,6LAAC,0KAAI;gCAAC,MAAK;gCAAY,WAAU;0CAC/B,cAAA,6LAAC,wIAAM;oCAAC,SAAQ;oCAAQ,MAAK;oCAAO,WAAU;;sDAC5C,6LAAC,yOAAY;4CAAC,WAAU;;;;;;wCACvB,YAAY,mBACX,6LAAC;4CAAK,WAAU;sDACb;;;;;;;;;;;;;;;;;0CAMT,6LAAC,wIAAM;gCAAC,SAAQ;gCAAQ,MAAK;gCAAO,WAAU;gCAAY,SAAS,IAAM,kBAAkB,CAAC;0CACzF,+BAAiB,6LAAC,oMAAC;oCAAC,WAAU;;;;;yDAAe,6LAAC,6MAAI;oCAAC,WAAU;;;;;;;;;;;;;;;;;;;;;;;YAMnE,gCACC,6LAAC;gBAAI,WAAU;0BACb,cAAA,6LAAC;oBAAI,WAAU;8BACZ,SAAS,GAAG,CAAC,CAAC;wBACb,MAAM,OAAO,KAAK,IAAI;wBACtB,MAAM,WAAW,aAAa,KAAK,IAAI;wBACvC,qBACE,6LAAC,0KAAI;4BAEH,MAAM,KAAK,IAAI;4BACf,SAAS,IAAM,kBAAkB;4BACjC,WAAW,IAAA,qHAAE,EACX,sFACA,WACI,qCACA;;8CAGN,6LAAC;oCAAK,WAAU;;;;;;gCACf,KAAK,KAAK;;2BAXN,KAAK,IAAI;;;;;oBAcpB;;;;;;;;;;;;;;;;;AAMZ;GA/FgB;;QACG,oJAAW;QACV,4HAAQ;;;KAFZ"
+      }
+    },
+    {
+      "offset": {
+        "line": 384,
+        "column": 0
+      },
+      "map": {
+        "version": 3,
+        "sources": [
+          "file:///Users/abhijeetmishra/Developer/Projects/Salesapp/web-app/components/ui/input.tsx"
+        ],
+        "sourcesContent": [
+          "import * as React from 'react'\n\nimport { cn } from '@/lib/utils'\n\nfunction Input({ className, type, ...props }: React.ComponentProps<'input'>) {\n  return (\n    <input\n      type={type}\n      data-slot=\"input\"\n      className={cn(\n        'file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',\n        'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',\n        'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',\n        className,\n      )}\n      {...props}\n    />\n  )\n}\n\nexport { Input }\n"
+        ],
+        "names": [],
+        "mappings": ";;;;;AAEA;;;AAEA,SAAS,MAAM,EAAE,SAAS,EAAE,IAAI,EAAE,GAAG,OAAsC;IACzE,qBACE,6LAAC;QACC,MAAM;QACN,aAAU;QACV,WAAW,IAAA,qHAAE,EACX,8bACA,iFACA,0GACA;QAED,GAAG,KAAK;;;;;;AAGf;KAdS"
+      }
+    },
+    {
+      "offset": {
+        "line": 415,
+        "column": 0
+      },
+      "map": {
+        "version": 3,
+        "sources": [
+          "file:///Users/abhijeetmishra/Developer/Projects/Salesapp/web-app/components/channel-switcher.tsx"
+        ],
+        "sourcesContent": [
+          "\"use client\"\n\nimport { cn } from \"@/lib/utils\"\nimport { useStore, type Channel } from \"@/lib/store\"\nimport { MessageSquare, Smartphone, MessageCircle, Monitor, Mic } from \"lucide-react\"\n\nconst channels: Array<{ id: Channel; label: string; icon: typeof MessageSquare }> = [\n  { id: \"web-chat\", label: \"Web Chat\", icon: MessageSquare },\n  { id: \"mobile-chat\", label: \"Mobile\", icon: Smartphone },\n  { id: \"whatsapp\", label: \"WhatsApp\", icon: MessageCircle },\n  { id: \"kiosk\", label: \"Kiosk\", icon: Monitor },\n  { id: \"voice\", label: \"Voice\", icon: Mic },\n]\n\nexport function ChannelSwitcher() {\n  const { state, dispatch } = useStore()\n\n  return (\n    <div className=\"flex flex-wrap gap-2\">\n      {channels.map((channel) => {\n        const Icon = channel.icon\n        const isActive = state.currentChannel === channel.id\n\n        return (\n          <button\n            key={channel.id}\n            onClick={() => dispatch({ type: \"SET_CHANNEL\", channel: channel.id })}\n            className={cn(\n              \"flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition\",\n              isActive\n                ? \"bg-[#B11226] text-[#F6D365]\"\n                : \"bg-[#7A0C1B] text-[#F6D365]/70 hover:bg-[#B11226]/60\",\n            )}\n          >\n            <Icon className=\"h-4 w-4\" />\n            {channel.label}\n          </button>\n        )\n      })}\n    </div>\n  )\n}\n"
+        ],
+        "names": [],
+        "mappings": ";;;;;AAEA;AACA;AACA;AAAA;AAAA;AAAA;AAAA;;;AAJA;;;;AAMA,MAAM,WAA8E;IAClF;QAAE,IAAI;QAAY,OAAO;QAAY,MAAM,4OAAa;IAAC;IACzD;QAAE,IAAI;QAAe,OAAO;QAAU,MAAM,+NAAU;IAAC;IACvD;QAAE,IAAI;QAAY,OAAO;QAAY,MAAM,4OAAa;IAAC;IACzD;QAAE,IAAI;QAAS,OAAO;QAAS,MAAM,sNAAO;IAAC;IAC7C;QAAE,IAAI;QAAS,OAAO;QAAS,MAAM,0MAAG;IAAC;CAC1C;AAEM,SAAS;;IACd,MAAM,EAAE,KAAK,EAAE,QAAQ,EAAE,GAAG,IAAA,4HAAQ;IAEpC,qBACE,6LAAC;QAAI,WAAU;kBACZ,SAAS,GAAG,CAAC,CAAC;YACb,MAAM,OAAO,QAAQ,IAAI;YACzB,MAAM,WAAW,MAAM,cAAc,KAAK,QAAQ,EAAE;YAEpD,qBACE,6LAAC;gBAEC,SAAS,IAAM,SAAS;wBAAE,MAAM;wBAAe,SAAS,QAAQ,EAAE;oBAAC;gBACnE,WAAW,IAAA,qHAAE,EACX,+EACA,WACI,gCACA;;kCAGN,6LAAC;wBAAK,WAAU;;;;;;oBACf,QAAQ,KAAK;;eAVT,QAAQ,EAAE;;;;;QAarB;;;;;;AAGN;GA3BgB;;QACc,4HAAQ;;;KADtB"
+      }
+    },
+    {
+      "offset": {
+        "line": 511,
+        "column": 0
+      },
+      "map": {
+        "version": 3,
+        "sources": [
+          "file:///Users/abhijeetmishra/Developer/Projects/Salesapp/web-app/components/chat-shell.tsx"
+        ],
+        "sourcesContent": [
+          "\"use client\"\n\nimport { useState, useRef, useEffect } from \"react\"\nimport { useStore } from \"@/lib/store\"\nimport { cn } from \"@/lib/utils\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { ChannelSwitcher } from \"@/components/channel-switcher\"\nimport { AgentTile } from \"@/components/agent-tile\"\nimport { Send, Mic, User, Bot, Loader2 } from \"lucide-react\"\n\nexport function ChatShell() {\n  const { state } = useStore()\n  const [input, setInput] = useState(\"\")\n  const messagesEndRef = useRef<HTMLDivElement>(null)\n\n  useEffect(() => {\n    messagesEndRef.current?.scrollIntoView({ behavior: \"smooth\" })\n  }, [state.messages])\n\n  return (\n    <div className=\"flex flex-col h-full bg-[#4A0E12] text-[#F6D365]\">\n      <div className=\"p-4 border-b border-[#B11226]/40\">\n        <h2 className=\"text-lg font-semibold text-[#F2B705]\">Birla OneAI Assistant</h2>\n        <ChannelSwitcher />\n      </div>\n\n      <div className=\"flex-1 overflow-y-auto p-4 space-y-4\">\n        {state.messages.map((m) => (\n          <div\n            key={m.id}\n            className={cn(\n              \"flex gap-3 max-w-[80%]\",\n              m.role === \"user\" ? \"ml-auto flex-row-reverse\" : \"\",\n            )}\n          >\n            <div\n              className={cn(\n                \"h-8 w-8 rounded-full flex items-center justify-center\",\n                m.role === \"user\" ? \"bg-[#B11226]\" : \"bg-[#7A0C1B]\",\n              )}\n            >\n              {m.role === \"user\" ? <User className=\"h-4 w-4\" /> : <Bot className=\"h-4 w-4\" />}\n            </div>\n            <div\n              className={cn(\n                \"px-4 py-2 rounded-2xl text-sm\",\n                m.role === \"user\"\n                  ? \"bg-[#B11226] text-[#F6D365]\"\n                  : \"bg-[#7A0C1B] text-[#F6D365]\",\n              )}\n            >\n              {m.content}\n            </div>\n          </div>\n        ))}\n        <div ref={messagesEndRef} />\n      </div>\n\n      <div className=\"p-4 border-t border-[#B11226]/40 flex gap-2\">\n        <Input\n          value={input}\n          onChange={(e) => setInput(e.target.value)}\n          placeholder=\"Type your message...\"\n          className=\"bg-[#7A0C1B] border-[#B11226]/40 text-[#F6D365]\"\n        />\n        <Button className=\"bg-[#B11226] hover:bg-[#7A0C1B]\">\n          <Send className=\"h-4 w-4\" />\n        </Button>\n      </div>\n    </div>\n  )\n}\n"
+        ],
+        "names": [],
+        "mappings": ";;;;;AAEA;AACA;AACA;AACA;AACA;AACA;AAEA;AAAA;AAAA;;;AATA;;;;;;;;AAWO,SAAS;;IACd,MAAM,EAAE,KAAK,EAAE,GAAG,IAAA,4HAAQ;IAC1B,MAAM,CAAC,OAAO,SAAS,GAAG,IAAA,yKAAQ,EAAC;IACnC,MAAM,iBAAiB,IAAA,uKAAM,EAAiB;IAE9C,IAAA,0KAAS;+BAAC;YACR,eAAe,OAAO,EAAE,eAAe;gBAAE,UAAU;YAAS;QAC9D;8BAAG;QAAC,MAAM,QAAQ;KAAC;IAEnB,qBACE,6LAAC;QAAI,WAAU;;0BACb,6LAAC;gBAAI,WAAU;;kCACb,6LAAC;wBAAG,WAAU;kCAAuC;;;;;;kCACrD,6LAAC,wJAAe;;;;;;;;;;;0BAGlB,6LAAC;gBAAI,WAAU;;oBACZ,MAAM,QAAQ,CAAC,GAAG,CAAC,CAAC,kBACnB,6LAAC;4BAEC,WAAW,IAAA,qHAAE,EACX,0BACA,EAAE,IAAI,KAAK,SAAS,6BAA6B;;8CAGnD,6LAAC;oCACC,WAAW,IAAA,qHAAE,EACX,yDACA,EAAE,IAAI,KAAK,SAAS,iBAAiB;8CAGtC,EAAE,IAAI,KAAK,uBAAS,6LAAC,6MAAI;wCAAC,WAAU;;;;;6DAAe,6LAAC,0MAAG;wCAAC,WAAU;;;;;;;;;;;8CAErE,6LAAC;oCACC,WAAW,IAAA,qHAAE,EACX,iCACA,EAAE,IAAI,KAAK,SACP,gCACA;8CAGL,EAAE,OAAO;;;;;;;2BAtBP,EAAE,EAAE;;;;;kCA0Bb,6LAAC;wBAAI,KAAK;;;;;;;;;;;;0BAGZ,6LAAC;gBAAI,WAAU;;kCACb,6LAAC,sIAAK;wBACJ,OAAO;wBACP,UAAU,CAAC,IAAM,SAAS,EAAE,MAAM,CAAC,KAAK;wBACxC,aAAY;wBACZ,WAAU;;;;;;kCAEZ,6LAAC,wIAAM;wBAAC,WAAU;kCAChB,cAAA,6LAAC,6MAAI;4BAAC,WAAU;;;;;;;;;;;;;;;;;;;;;;;AAK1B;GA7DgB;;QACI,4HAAQ;;;KADZ"
+      }
+    },
+    {
+      "offset": {
+        "line": 682,
+        "column": 0
+      },
+      "map": {
+        "version": 3,
+        "sources": [
+          "file:///Users/abhijeetmishra/Developer/Projects/Salesapp/web-app/components/agent-tile.tsx"
+        ],
+        "sourcesContent": [
+          "\"use client\"\n\nimport { cn } from \"@/lib/utils\"\nimport type { AgentState } from \"@/lib/store\"\nimport {\n  Sparkles,\n  Package,\n  CreditCard,\n  Truck,\n  Gift,\n  HeadphonesIcon,\n  Loader2,\n  CheckCircle2,\n  XCircle,\n} from \"lucide-react\"\n\nconst agentIcons: Record<string, typeof Sparkles> = {\n  recommendation: Sparkles,\n  inventory: Package,\n  payment: CreditCard,\n  fulfillment: Truck,\n  loyalty: Gift,\n  postPurchase: HeadphonesIcon,\n}\n\nconst statusColors: Record<string, string> = {\n  idle: \"bg-[#7A0C1B] text-[#F6D365]\",\n  running: \"bg-[#B11226]/40 text-[#F2B705] border border-[#F2B705]/40\",\n  success: \"bg-green-700/30 text-green-400 border border-green-500/30\",\n  error: \"bg-red-700/30 text-red-400 border border-red-500/30\",\n}\n\ninterface AgentTileProps {\n  agentKey: string\n  agent: AgentState\n  compact?: boolean\n}\n\nexport function AgentTile({ agentKey, agent, compact = false }: AgentTileProps) {\n  const Icon = agentIcons[agentKey] || Sparkles\n\n  return (\n    <div\n      className={cn(\n        compact\n          ? \"flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium\"\n          : \"flex flex-col gap-2 p-4 rounded-lg\",\n        statusColors[agent.status],\n      )}\n    >\n      <div className=\"flex items-center gap-2\">\n        {agent.status === \"running\" && <Loader2 className=\"h-4 w-4 animate-spin\" />}\n        {agent.status === \"success\" && <CheckCircle2 className=\"h-4 w-4\" />}\n        {agent.status === \"error\" && <XCircle className=\"h-4 w-4\" />}\n        {agent.status === \"idle\" && <Icon className=\"h-4 w-4\" />}\n        <span className=\"font-medium\">{agent.name}</span>\n      </div>\n    </div>\n  )\n}\n"
+        ],
+        "names": [],
+        "mappings": ";;;;;AAEA;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAJA;;;;AAgBA,MAAM,aAA8C;IAClD,gBAAgB,yNAAQ;IACxB,WAAW,sNAAO;IAClB,SAAS,mOAAU;IACnB,aAAa,gNAAK;IAClB,SAAS,6MAAI;IACb,cAAc,uOAAc;AAC9B;AAEA,MAAM,eAAuC;IAC3C,MAAM;IACN,SAAS;IACT,SAAS;IACT,OAAO;AACT;AAQO,SAAS,UAAU,EAAE,QAAQ,EAAE,KAAK,EAAE,UAAU,KAAK,EAAkB;IAC5E,MAAM,OAAO,UAAU,CAAC,SAAS,IAAI,yNAAQ;IAE7C,qBACE,6LAAC;QACC,WAAW,IAAA,qHAAE,EACX,UACI,uEACA,sCACJ,YAAY,CAAC,MAAM,MAAM,CAAC;kBAG5B,cAAA,6LAAC;YAAI,WAAU;;gBACZ,MAAM,MAAM,KAAK,2BAAa,6LAAC,+NAAO;oBAAC,WAAU;;;;;;gBACjD,MAAM,MAAM,KAAK,2BAAa,6LAAC,wOAAY;oBAAC,WAAU;;;;;;gBACtD,MAAM,MAAM,KAAK,yBAAW,6LAAC,0NAAO;oBAAC,WAAU;;;;;;gBAC/C,MAAM,MAAM,KAAK,wBAAU,6LAAC;oBAAK,WAAU;;;;;;8BAC5C,6LAAC;oBAAK,WAAU;8BAAe,MAAM,IAAI;;;;;;;;;;;;;;;;;AAIjD;KArBgB"
+      }
+    },
+    {
+      "offset": {
+        "line": 780,
+        "column": 0
+      },
+      "map": {
+        "version": 3,
+        "sources": [
+          "file:///Users/abhijeetmishra/Developer/Projects/Salesapp/web-app/lib/api.ts"
+        ],
+        "sourcesContent": [
+          "// Client-side API helpers\n\nexport async function fetchCustomer(customerId: string) {\n  const res = await fetch(`/api/mock/customers?id=${customerId}`)\n  return res.json()\n}\n\nexport async function fetchProducts(category?: string) {\n  const url = category ? `/api/mock/products?category=${category}` : \"/api/mock/products\"\n  const res = await fetch(url)\n  return res.json()\n}\n\nexport async function fetchProduct(sku: string) {\n  const res = await fetch(`/api/mock/products?sku=${sku}`)\n  return res.json()\n}\n\nexport async function fetchInventory(sku: string, mode = \"normal\") {\n  const res = await fetch(`/api/mock/inventory?sku=${sku}&mode=${mode}`)\n  return res.json()\n}\n\nexport async function getRecommendations(customerId: string, intent: string, excludeSkus: string[] = []) {\n  const res = await fetch(\"/api/mock/recommend\", {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\" },\n    body: JSON.stringify({ customerId, intent, excludeSkus }),\n  })\n  return res.json()\n}\n\nexport async function processPayment(payload: {\n  amount: number\n  paymentMethod: string\n  customerId: string\n  mode?: string\n  useGiftCard?: boolean\n  useLoyaltyPoints?: boolean\n  giftCardAmount?: number\n  loyaltyPointsUsed?: number\n}) {\n  const res = await fetch(\"/api/mock/payment\", {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\" },\n    body: JSON.stringify(payload),\n  })\n  return res.json()\n}\n\nexport async function scheduleFulfillment(payload: {\n  orderId: string\n  items: Array<{ sku: string; quantity: number }>\n  fulfillmentType: \"pickup\" | \"delivery\"\n  storeId?: string\n  preferredDate?: { date: string; time: string }\n}) {\n  const res = await fetch(\"/api/mock/fulfillment\", {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\" },\n    body: JSON.stringify(payload),\n  })\n  return res.json()\n}\n\nexport async function getLoyaltyInfo(payload: {\n  customerId: string\n  cartTotal: number\n  cartItems: Array<{ sku: string }>\n  promoCode?: string\n  active?: boolean\n}) {\n  const res = await fetch(\"/api/mock/loyalty\", {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\" },\n    body: JSON.stringify(payload),\n  })\n  return res.json()\n}\n"
+        ],
+        "names": [],
+        "mappings": "AAAA,0BAA0B;;;;;;;;;;;;;;;;;;;AAEnB,eAAe,cAAc,UAAkB;IACpD,MAAM,MAAM,MAAM,MAAM,CAAC,uBAAuB,EAAE,YAAY;IAC9D,OAAO,IAAI,IAAI;AACjB;AAEO,eAAe,cAAc,QAAiB;IACnD,MAAM,MAAM,WAAW,CAAC,4BAA4B,EAAE,UAAU,GAAG;IACnE,MAAM,MAAM,MAAM,MAAM;IACxB,OAAO,IAAI,IAAI;AACjB;AAEO,eAAe,aAAa,GAAW;IAC5C,MAAM,MAAM,MAAM,MAAM,CAAC,uBAAuB,EAAE,KAAK;IACvD,OAAO,IAAI,IAAI;AACjB;AAEO,eAAe,eAAe,GAAW,EAAE,OAAO,QAAQ;IAC/D,MAAM,MAAM,MAAM,MAAM,CAAC,wBAAwB,EAAE,IAAI,MAAM,EAAE,MAAM;IACrE,OAAO,IAAI,IAAI;AACjB;AAEO,eAAe,mBAAmB,UAAkB,EAAE,MAAc,EAAE,cAAwB,EAAE;IACrG,MAAM,MAAM,MAAM,MAAM,uBAAuB;QAC7C,QAAQ;QACR,SAAS;YAAE,gBAAgB;QAAmB;QAC9C,MAAM,KAAK,SAAS,CAAC;YAAE;YAAY;YAAQ;QAAY;IACzD;IACA,OAAO,IAAI,IAAI;AACjB;AAEO,eAAe,eAAe,OASpC;IACC,MAAM,MAAM,MAAM,MAAM,qBAAqB;QAC3C,QAAQ;QACR,SAAS;YAAE,gBAAgB;QAAmB;QAC9C,MAAM,KAAK,SAAS,CAAC;IACvB;IACA,OAAO,IAAI,IAAI;AACjB;AAEO,eAAe,oBAAoB,OAMzC;IACC,MAAM,MAAM,MAAM,MAAM,yBAAyB;QAC/C,QAAQ;QACR,SAAS;YAAE,gBAAgB;QAAmB;QAC9C,MAAM,KAAK,SAAS,CAAC;IACvB;IACA,OAAO,IAAI,IAAI;AACjB;AAEO,eAAe,eAAe,OAMpC;IACC,MAAM,MAAM,MAAM,MAAM,qBAAqB;QAC3C,QAAQ;QACR,SAAS;YAAE,gBAAgB;QAAmB;QAC9C,MAAM,KAAK,SAAS,CAAC;IACvB;IACA,OAAO,IAAI,IAAI;AACjB"
+      }
+    },
+    {
+      "offset": {
+        "line": 867,
+        "column": 0
+      },
+      "map": {
+        "version": 3,
+        "sources": [
+          "file:///Users/abhijeetmishra/Developer/Projects/Salesapp/web-app/components/ui/card.tsx"
+        ],
+        "sourcesContent": [
+          "import * as React from 'react'\n\nimport { cn } from '@/lib/utils'\n\nfunction Card({ className, ...props }: React.ComponentProps<'div'>) {\n  return (\n    <div\n      data-slot=\"card\"\n      className={cn(\n        'bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm',\n        className,\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction CardHeader({ className, ...props }: React.ComponentProps<'div'>) {\n  return (\n    <div\n      data-slot=\"card-header\"\n      className={cn(\n        '@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6',\n        className,\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction CardTitle({ className, ...props }: React.ComponentProps<'div'>) {\n  return (\n    <div\n      data-slot=\"card-title\"\n      className={cn('leading-none font-semibold', className)}\n      {...props}\n    />\n  )\n}\n\nfunction CardDescription({ className, ...props }: React.ComponentProps<'div'>) {\n  return (\n    <div\n      data-slot=\"card-description\"\n      className={cn('text-muted-foreground text-sm', className)}\n      {...props}\n    />\n  )\n}\n\nfunction CardAction({ className, ...props }: React.ComponentProps<'div'>) {\n  return (\n    <div\n      data-slot=\"card-action\"\n      className={cn(\n        'col-start-2 row-span-2 row-start-1 self-start justify-self-end',\n        className,\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction CardContent({ className, ...props }: React.ComponentProps<'div'>) {\n  return (\n    <div\n      data-slot=\"card-content\"\n      className={cn('px-6', className)}\n      {...props}\n    />\n  )\n}\n\nfunction CardFooter({ className, ...props }: React.ComponentProps<'div'>) {\n  return (\n    <div\n      data-slot=\"card-footer\"\n      className={cn('flex items-center px-6 [.border-t]:pt-6', className)}\n      {...props}\n    />\n  )\n}\n\nexport {\n  Card,\n  CardHeader,\n  CardFooter,\n  CardTitle,\n  CardAction,\n  CardDescription,\n  CardContent,\n}\n"
+        ],
+        "names": [],
+        "mappings": ";;;;;;;;;;;;;;;;;AAEA;;;AAEA,SAAS,KAAK,EAAE,SAAS,EAAE,GAAG,OAAoC;IAChE,qBACE,6LAAC;QACC,aAAU;QACV,WAAW,IAAA,qHAAE,EACX,qFACA;QAED,GAAG,KAAK;;;;;;AAGf;KAXS;AAaT,SAAS,WAAW,EAAE,SAAS,EAAE,GAAG,OAAoC;IACtE,qBACE,6LAAC;QACC,aAAU;QACV,WAAW,IAAA,qHAAE,EACX,4JACA;QAED,GAAG,KAAK;;;;;;AAGf;MAXS;AAaT,SAAS,UAAU,EAAE,SAAS,EAAE,GAAG,OAAoC;IACrE,qBACE,6LAAC;QACC,aAAU;QACV,WAAW,IAAA,qHAAE,EAAC,8BAA8B;QAC3C,GAAG,KAAK;;;;;;AAGf;MARS;AAUT,SAAS,gBAAgB,EAAE,SAAS,EAAE,GAAG,OAAoC;IAC3E,qBACE,6LAAC;QACC,aAAU;QACV,WAAW,IAAA,qHAAE,EAAC,iCAAiC;QAC9C,GAAG,KAAK;;;;;;AAGf;MARS;AAUT,SAAS,WAAW,EAAE,SAAS,EAAE,GAAG,OAAoC;IACtE,qBACE,6LAAC;QACC,aAAU;QACV,WAAW,IAAA,qHAAE,EACX,kEACA;QAED,GAAG,KAAK;;;;;;AAGf;MAXS;AAaT,SAAS,YAAY,EAAE,SAAS,EAAE,GAAG,OAAoC;IACvE,qBACE,6LAAC;QACC,aAAU;QACV,WAAW,IAAA,qHAAE,EAAC,QAAQ;QACrB,GAAG,KAAK;;;;;;AAGf;MARS;AAUT,SAAS,WAAW,EAAE,SAAS,EAAE,GAAG,OAAoC;IACtE,qBACE,6LAAC;QACC,aAAU;QACV,WAAW,IAAA,qHAAE,EAAC,2CAA2C;QACxD,GAAG,KAAK;;;;;;AAGf;MARS"
+      }
+    },
+    {
+      "offset": {
+        "line": 987,
+        "column": 0
+      },
+      "map": {
+        "version": 3,
+        "sources": [
+          "file:///Users/abhijeetmishra/Developer/Projects/Salesapp/web-app/components/ui/badge.tsx"
+        ],
+        "sourcesContent": [
+          "import * as React from 'react'\nimport { Slot } from '@radix-ui/react-slot'\nimport { cva, type VariantProps } from 'class-variance-authority'\n\nimport { cn } from '@/lib/utils'\n\nconst badgeVariants = cva(\n  'inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden',\n  {\n    variants: {\n      variant: {\n        default:\n          'border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90',\n        secondary:\n          'border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90',\n        destructive:\n          'border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',\n        outline:\n          'text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground',\n      },\n    },\n    defaultVariants: {\n      variant: 'default',\n    },\n  },\n)\n\nfunction Badge({\n  className,\n  variant,\n  asChild = false,\n  ...props\n}: React.ComponentProps<'span'> &\n  VariantProps<typeof badgeVariants> & { asChild?: boolean }) {\n  const Comp = asChild ? Slot : 'span'\n\n  return (\n    <Comp\n      data-slot=\"badge\"\n      className={cn(badgeVariants({ variant }), className)}\n      {...props}\n    />\n  )\n}\n\nexport { Badge, badgeVariants }\n"
+        ],
+        "names": [],
+        "mappings": ";;;;;;;AACA;AACA;AAEA;;;;;AAEA,MAAM,gBAAgB,IAAA,0KAAG,EACvB,kZACA;IACE,UAAU;QACR,SAAS;YACP,SACE;YACF,WACE;YACF,aACE;YACF,SACE;QACJ;IACF;IACA,iBAAiB;QACf,SAAS;IACX;AACF;AAGF,SAAS,MAAM,EACb,SAAS,EACT,OAAO,EACP,UAAU,KAAK,EACf,GAAG,OAEuD;IAC1D,MAAM,OAAO,UAAU,2KAAI,GAAG;IAE9B,qBACE,6LAAC;QACC,aAAU;QACV,WAAW,IAAA,qHAAE,EAAC,cAAc;YAAE;QAAQ,IAAI;QACzC,GAAG,KAAK;;;;;;AAGf;KAhBS"
+      }
+    },
+    {
+      "offset": {
+        "line": 1039,
+        "column": 0
+      },
+      "map": {
+        "version": 3,
+        "sources": [
+          "file:///Users/abhijeetmishra/Developer/Projects/Salesapp/web-app/components/ui/separator.tsx"
+        ],
+        "sourcesContent": [
+          "'use client'\n\nimport * as React from 'react'\nimport * as SeparatorPrimitive from '@radix-ui/react-separator'\n\nimport { cn } from '@/lib/utils'\n\nfunction Separator({\n  className,\n  orientation = 'horizontal',\n  decorative = true,\n  ...props\n}: React.ComponentProps<typeof SeparatorPrimitive.Root>) {\n  return (\n    <SeparatorPrimitive.Root\n      data-slot=\"separator\"\n      decorative={decorative}\n      orientation={orientation}\n      className={cn(\n        'bg-border shrink-0 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px',\n        className,\n      )}\n      {...props}\n    />\n  )\n}\n\nexport { Separator }\n"
+        ],
+        "names": [],
+        "mappings": ";;;;;AAGA;AAEA;AALA;;;;AAOA,SAAS,UAAU,EACjB,SAAS,EACT,cAAc,YAAY,EAC1B,aAAa,IAAI,EACjB,GAAG,OACkD;IACrD,qBACE,6LAAC,gLAAuB;QACtB,aAAU;QACV,YAAY;QACZ,aAAa;QACb,WAAW,IAAA,qHAAE,EACX,kKACA;QAED,GAAG,KAAK;;;;;;AAGf;KAlBS"
+      }
+    },
+    {
+      "offset": {
+        "line": 1074,
+        "column": 0
+      },
+      "map": {
+        "version": 3,
+        "sources": [
+          "file:///Users/abhijeetmishra/Developer/Projects/Salesapp/web-app/app/chat/page.tsx"
+        ],
+        "sourcesContent": [
+          "\"use client\"\n\nimport { useEffect } from \"react\"\nimport { Navigation } from \"@/components/navigation\"\nimport { ChatShell } from \"@/components/chat-shell\"\nimport { AgentTile } from \"@/components/agent-tile\"\nimport { useStore } from \"@/lib/store\"\nimport { fetchCustomer } from \"@/lib/api\"\nimport { Card, CardContent, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { Crown, ShoppingBag } from \"lucide-react\"\n\nexport default function ChatPage() {\n  const { state, dispatch } = useStore()\n\n  useEffect(() => {\n    if (!state.customer) {\n      fetchCustomer(\"cust_03\").then((result) => {\n        if (result.success) {\n          dispatch({ type: \"SET_CUSTOMER\", customer: result.data })\n        }\n      })\n    }\n  }, [state.customer, dispatch])\n\n  const tierColors: Record<string, string> = {\n    bronze: \"bg-amber-700\",\n    silver: \"bg-slate-400\",\n    gold: \"bg-amber-400\",\n    platinum: \"bg-slate-200\",\n  }\n\n  return (\n    <div className=\"min-h-screen bg-background\">\n      <Navigation />\n\n      <main className=\"container mx-auto px-4 py-6\">\n        <div className=\"grid lg:grid-cols-[1fr_320px] gap-6\">\n          {/* Main Chat */}\n          <ChatShell />\n\n          {/* Sidebar */}\n          <div className=\"space-y-4 hidden lg:block\">\n            {/* Customer Profile */}\n            {state.customer && (\n              <Card>\n                <CardHeader className=\"pb-3\">\n                  <CardTitle className=\"text-base flex items-center gap-2\">\n                    <Crown className=\"h-4 w-4\" />\n                    Customer Profile\n                  </CardTitle>\n                </CardHeader>\n                <CardContent className=\"space-y-3\">\n                  <div className=\"flex items-center justify-between\">\n                    <span className=\"font-medium\">{state.customer.name}</span>\n                    <Badge className={tierColors[state.customer.loyaltyTier]}>{state.customer.loyaltyTier}</Badge>\n                  </div>\n                  <div className=\"text-sm text-muted-foreground space-y-1\">\n                    <p>{state.customer.loyaltyPoints.toLocaleString()} points</p>\n                    <p>${state.customer.giftCardBalance.toFixed(2)} gift card</p>\n                  </div>\n                  <Separator />\n                  <div>\n                    <p className=\"text-xs text-muted-foreground mb-2\">Recent Purchases</p>\n                    {state.customer.purchaseHistory\n                      ?.slice(0, 2)\n                      .map((purchase: { orderId: string; date: string; total: number }) => (\n                        <div key={purchase.orderId} className=\"flex items-center gap-2 text-sm\">\n                          <ShoppingBag className=\"h-3 w-3 text-muted-foreground\" />\n                          <span className=\"text-muted-foreground\">{purchase.date}</span>\n                          <span>${purchase.total}</span>\n                        </div>\n                      ))}\n                  </div>\n                </CardContent>\n              </Card>\n            )}\n\n            {/* Agent Status */}\n            <Card>\n              <CardHeader className=\"pb-3\">\n                <CardTitle className=\"text-base\">Agent Orchestration</CardTitle>\n              </CardHeader>\n              <CardContent className=\"space-y-2\">\n                {Object.entries(state.agents).map(([key, agent]) => (\n                  <AgentTile key={key} agentKey={key} agent={agent} />\n                ))}\n              </CardContent>\n            </Card>\n          </div>\n        </div>\n      </main>\n    </div>\n  )\n}\n"
+        ],
+        "names": [],
+        "mappings": ";;;;;AAEA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AAAA;;;AAXA;;;;;;;;;;;AAae,SAAS;;IACtB,MAAM,EAAE,KAAK,EAAE,QAAQ,EAAE,GAAG,IAAA,4HAAQ;IAEpC,IAAA,0KAAS;8BAAC;YACR,IAAI,CAAC,MAAM,QAAQ,EAAE;gBACnB,IAAA,8HAAa,EAAC,WAAW,IAAI;0CAAC,CAAC;wBAC7B,IAAI,OAAO,OAAO,EAAE;4BAClB,SAAS;gCAAE,MAAM;gCAAgB,UAAU,OAAO,IAAI;4BAAC;wBACzD;oBACF;;YACF;QACF;6BAAG;QAAC,MAAM,QAAQ;QAAE;KAAS;IAE7B,MAAM,aAAqC;QACzC,QAAQ;QACR,QAAQ;QACR,MAAM;QACN,UAAU;IACZ;IAEA,qBACE,6LAAC;QAAI,WAAU;;0BACb,6LAAC,0IAAU;;;;;0BAEX,6LAAC;gBAAK,WAAU;0BACd,cAAA,6LAAC;oBAAI,WAAU;;sCAEb,6LAAC,4IAAS;;;;;sCAGV,6LAAC;4BAAI,WAAU;;gCAEZ,MAAM,QAAQ,kBACb,6LAAC,oIAAI;;sDACH,6LAAC,0IAAU;4CAAC,WAAU;sDACpB,cAAA,6LAAC,yIAAS;gDAAC,WAAU;;kEACnB,6LAAC,gNAAK;wDAAC,WAAU;;;;;;oDAAY;;;;;;;;;;;;sDAIjC,6LAAC,2IAAW;4CAAC,WAAU;;8DACrB,6LAAC;oDAAI,WAAU;;sEACb,6LAAC;4DAAK,WAAU;sEAAe,MAAM,QAAQ,CAAC,IAAI;;;;;;sEAClD,6LAAC,sIAAK;4DAAC,WAAW,UAAU,CAAC,MAAM,QAAQ,CAAC,WAAW,CAAC;sEAAG,MAAM,QAAQ,CAAC,WAAW;;;;;;;;;;;;8DAEvF,6LAAC;oDAAI,WAAU;;sEACb,6LAAC;;gEAAG,MAAM,QAAQ,CAAC,aAAa,CAAC,cAAc;gEAAG;;;;;;;sEAClD,6LAAC;;gEAAE;gEAAE,MAAM,QAAQ,CAAC,eAAe,CAAC,OAAO,CAAC;gEAAG;;;;;;;;;;;;;8DAEjD,6LAAC,8IAAS;;;;;8DACV,6LAAC;;sEACC,6LAAC;4DAAE,WAAU;sEAAqC;;;;;;wDACjD,MAAM,QAAQ,CAAC,eAAe,EAC3B,MAAM,GAAG,GACV,IAAI,CAAC,yBACJ,6LAAC;gEAA2B,WAAU;;kFACpC,6LAAC,sOAAW;wEAAC,WAAU;;;;;;kFACvB,6LAAC;wEAAK,WAAU;kFAAyB,SAAS,IAAI;;;;;;kFACtD,6LAAC;;4EAAK;4EAAE,SAAS,KAAK;;;;;;;;+DAHd,SAAS,OAAO;;;;;;;;;;;;;;;;;;;;;;;8CAYtC,6LAAC,oIAAI;;sDACH,6LAAC,0IAAU;4CAAC,WAAU;sDACpB,cAAA,6LAAC,yIAAS;gDAAC,WAAU;0DAAY;;;;;;;;;;;sDAEnC,6LAAC,2IAAW;4CAAC,WAAU;sDACpB,OAAO,OAAO,CAAC,MAAM,MAAM,EAAE,GAAG,CAAC,CAAC,CAAC,KAAK,MAAM,iBAC7C,6LAAC,4IAAS;oDAAW,UAAU;oDAAK,OAAO;mDAA3B;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AASlC;GAlFwB;;QACM,4HAAQ;;;KADd"
+      }
+    }
+  ]
+}
