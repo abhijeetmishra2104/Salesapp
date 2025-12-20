@@ -1,51 +1,63 @@
 import { NextResponse } from "next/server"
-import productsData from "@/mock/products.json"
 
-const intentKeywords: Record<string, string[]> = {
-  wedding: ["wedding-collection", "bridal", "elegant"],
-  comfort: ["comfortable", "flats", "sneakers"],
-  formal: ["heels", "pumps", "evening"],
-  casual: ["sneakers", "flats"],
-  sale: ["sale"],
-}
+const BACKEND_BASE_URL = process.env.BACKEND_BASE_URL || "http://localhost:8000"
 
 export async function POST(request: Request) {
-  const body = await request.json()
-  const { customerId, intent, excludeSkus = [] } = body
+  try {
+    const body = await request.json()
 
-  await new Promise((resolve) => setTimeout(resolve, 400))
-
-  let recommendations = [...productsData]
-
-  // Filter by intent keywords
-  if (intent) {
-    const keywords = Object.entries(intentKeywords)
-      .filter(([key]) => intent.toLowerCase().includes(key))
-      .flatMap(([, values]) => values)
-
-    if (keywords.length > 0) {
-      recommendations = recommendations.filter(
-        (p) =>
-          p.badges.some((b) => keywords.includes(b)) ||
-          keywords.includes(p.category) ||
-          keywords.includes(p.subcategory),
-      )
-    }
-  }
-
-  // Exclude already selected SKUs
-  recommendations = recommendations.filter((p) => !excludeSkus.includes(p.sku))
-
-  // Sort by rating and limit to 3
-  recommendations = recommendations.sort((a, b) => b.rating - a.rating).slice(0, 3)
-
-  return NextResponse.json({
-    success: true,
-    data: {
+    const {
+      sessionId = body.sessionId || crypto.randomUUID(),
       customerId,
-      intent,
-      recommendations,
-      timestamp: new Date().toISOString(),
-    },
-  })
+      cart,
+      userProfile = {},
+    } = body
+
+    // Call FastAPI Recommendation Agent
+    console.log("Fetching recommendations from backend...")
+    const res = await fetch(`${BACKEND_BASE_URL}/api/recommendations/cart`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sessionId,
+        customerId,
+        cart,
+        userProfile,
+      }),
+    })
+
+    if (!res.ok) {
+      throw new Error(`Backend error: ${res.status}`)
+    }
+
+    const data = await res.json()
+
+    return NextResponse.json({
+      success: data.status === "success",
+      data: {
+        customerId,
+        recommendations: data.recommendations,
+        timestamp: new Date().toISOString(),
+      },
+      errors: data.errors || [],
+    })
+  } catch (error: any) {
+    console.error("Recommendation API error:", error)
+
+    return NextResponse.json(
+      {
+        success: false,
+        data: null,
+        errors: [
+          {
+            code: "RECOMMENDATION_FAILED",
+            message: error.message || "Failed to fetch recommendations",
+          },
+        ],
+      },
+      { status: 500 },
+    )
+  }
 }
